@@ -5,7 +5,6 @@ RSpec.describe Project, type: :model do
     user = FactoryBot.create(:user)
     FactoryBot.create(:project, name: "Test Project", owner: user)
     new_project = FactoryBot.build(:project, name: "Test Project", owner: user)
-    new_project.save
 
     new_project.valid?
     expect(new_project.errors[:name]).to include("has already been taken")
