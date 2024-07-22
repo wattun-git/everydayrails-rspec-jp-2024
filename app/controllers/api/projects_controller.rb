@@ -21,6 +21,7 @@ class Api::ProjectsController < ApplicationController
     end
   end
 
+  ####### 追加したコード
   def destroy
     @project = Project.find(params[:id])
 
@@ -30,6 +31,7 @@ class Api::ProjectsController < ApplicationController
       render json: @project.errors, status: :unprocessable_entity
     end
   end
+  ###########################################
 
   private
 
