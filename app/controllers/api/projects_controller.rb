@@ -21,6 +21,18 @@ class Api::ProjectsController < ApplicationController
     end
   end
 
+  ####### 追加したコード
+  def destroy
+    @project = Project.find(params[:id])
+
+    if @project.destroy
+      head :no_content
+    else
+      render json: @project.errors, status: :unprocessable_entity
+    end
+  end
+  ###########################################
+
   private
 
   def authenticate_user_from_token!

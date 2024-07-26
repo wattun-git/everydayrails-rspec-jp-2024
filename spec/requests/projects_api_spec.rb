@@ -44,4 +44,19 @@ RSpec.describe "Projects API", type: :request do
 
     expect(response).to have_http_status(:success)
   end
+
+  ####### 追加したコード
+  it 'destroy a project' do
+    user = FactoryBot.create(:user)
+    project = FactoryBot.create(:project, name: "Sample Project")
+
+    expect {
+      delete api_project_path(project.id), params: {
+        user_email: project.owner.email,
+        user_token: project.owner.authentication_token
+      }
+    }.to change(Project, :count).by(-1)
+
+    expect(response).to have_http_status(:no_content)
+  end
 end
