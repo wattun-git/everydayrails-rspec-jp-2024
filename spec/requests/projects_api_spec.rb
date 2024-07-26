@@ -51,12 +51,11 @@ RSpec.describe "Projects API", type: :request do
     project = FactoryBot.create(:project, name: "Sample Project")
 
     expect {
-      delete api_projects_path, params: {
-        user_email: user.email,
-        user_token: user.authentication_token,
-        project: project.id
+      delete api_project_path(project.id), params: {
+        user_email: project.owner.email,
+        user_token: project.owner.authentication_token
       }
-    }.to change(user.projects, :count).by(0)
+    }.to change(Project, :count).by(-1)
 
     expect(response).to have_http_status(:no_content)
   end
