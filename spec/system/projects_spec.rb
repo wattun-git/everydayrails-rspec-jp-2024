@@ -1,10 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe "Projects", type: :system do
+  # ユーザーは新しいプロジェクトを作成する
   scenario "user creates a new project" do
     user = FactoryBot.create(:user)
-    sign_in user
-
+    # この章で独⾃に定義したログインヘルパーを使う場合
+    # sign_in_as user
+    # もしくは Devise が提供しているヘルパーを使う場合
+    # sign_in user
     visit root_path
 
     expect {
@@ -14,8 +17,10 @@ RSpec.describe "Projects", type: :system do
       click_button "Create Project"
     }.to change(user.projects, :count).by(1)
 
+    aggregate_failures do
       expect(page).to have_content "Project was successfully created"
       expect(page).to have_content "Test Project"
       expect(page).to have_content "Owner: #{user.name}"
+    end
   end
 end
